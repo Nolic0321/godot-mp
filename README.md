@@ -1,10 +1,5 @@
-Godot Engine Node.JS Game Server
-======================================
-Simple game server using NodeJS, using very simple authentication.
+Godot MP Game made by Nolic0321
 
-Authors:
-  - rafinha (rafinha@rafinha.org / freenode)
-  - thc202 (#godotengine / freenode)
+Server implementation built from 
 
-Running:
-  node app.js
+Godot Engine Node.JS Game Server - https://github.com/salsa2k/godotserver
