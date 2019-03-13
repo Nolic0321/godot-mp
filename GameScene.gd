@@ -15,5 +15,4 @@ func spawn_entity(entity):
 
 
 func _on_Timer_timeout():
-	spawn_entity()
 	pass # replace with function body

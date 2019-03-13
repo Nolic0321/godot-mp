@@ -86,7 +86,6 @@ func _player_disconnected(id):
 	if get_tree().is_network_server():
 		if has_node("/root/GameScene"): # Game is in progress
 			emit_signal("game_error", "Player " + players[id] + " disconnected")
-			end_game()
 		else: # Game is not in progress
 			# If we are the server, send to the new dude all the already registered players
 			unregister_player(id)
@@ -106,7 +105,6 @@ func _connected_ok():
 # Callback from SceneTree, only for clients (not server)
 func _server_disconnected():
 	emit_signal("game_error", "Server disconnected")
-	end_game()
 
 # Callback from SceneTree, only for clients (not server)
 func _connected_fail():
