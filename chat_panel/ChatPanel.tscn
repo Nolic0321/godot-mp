@@ -1,0 +1,74 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://chat_panel/chat_area/ChatArea.gd" type="Script" id=1]
+[ext_resource path="res://text_entry/TextEntry.gd" type="Script" id=2]
+
+[sub_resource type="Theme" id=1]
+
+[node name="Panel" type="Panel"]
+margin_right = 596.0
+margin_bottom = 457.0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 3.0
+margin_right = -3.0
+margin_bottom = -3.0
+custom_constants/margin_right = 3
+custom_constants/margin_left = 6
+custom_constants/margin_bottom = 4
+
+[node name="VSplitContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 6.0
+margin_right = 590.0
+margin_bottom = 447.0
+grow_horizontal = 0
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="MarginContainer/VSplitContainer"]
+margin_right = 584.0
+margin_bottom = 14.0
+theme = SubResource( 1 )
+text = "Godot Chat"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="ChatContainer" type="VBoxContainer" parent="MarginContainer/VSplitContainer"]
+margin_top = 18.0
+margin_right = 584.0
+margin_bottom = 447.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ChatArea" type="RichTextLabel" parent="MarginContainer/VSplitContainer/ChatContainer"]
+margin_right = 584.0
+margin_bottom = 401.0
+size_flags_vertical = 3
+scroll_following = true
+script = ExtResource( 1 )
+text_entry = NodePath("../HSplitContainer/TextEntry")
+
+[node name="HSplitContainer" type="HBoxContainer" parent="MarginContainer/VSplitContainer/ChatContainer"]
+margin_top = 405.0
+margin_right = 584.0
+margin_bottom = 429.0
+size_flags_horizontal = 3
+custom_constants/separation = 4
+
+[node name="TextEntry" type="LineEdit" parent="MarginContainer/VSplitContainer/ChatContainer/HSplitContainer"]
+margin_right = 537.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+
+[node name="Button" type="Button" parent="MarginContainer/VSplitContainer/ChatContainer/HSplitContainer"]
+margin_left = 541.0
+margin_right = 584.0
+margin_bottom = 24.0
+grow_horizontal = 0
+rect_min_size = Vector2( 43, 24 )
+text = "Send"
+
