@@ -6,7 +6,7 @@
 [node name="Game" type="Node"]
 
 [node name="GameMenuPanel" parent="." instance=ExtResource( 1 )]
-visible = false
 
 [node name="Panel" parent="." instance=ExtResource( 2 )]
+visible = false
 

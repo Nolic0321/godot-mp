@@ -6,7 +6,7 @@ export (NodePath) onready var text_entry
 func _ready():
 	get_node(text_entry).connect("send_text",self,"user_text")
 	
-func user_text(text):
+remotesync func user_text(text):
 	print_debug("add_text called with " + text)
 	newline()
 	add_text(text)

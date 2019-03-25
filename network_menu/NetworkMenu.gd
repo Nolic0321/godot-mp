@@ -27,7 +27,7 @@ func get_server_list():
 	var http = HTTPClient.new()
 	var err = http.connect_to_host("https://api.simmarith.com",443 ,true, true)
 	assert(err == OK)
-    # Wait until resolved and connected
+	# Wait until resolved and connected
 	while http.get_status() == HTTPClient.STATUS_CONNECTING or http.get_status() == HTTPClient.STATUS_RESOLVING:
 		http.poll()
 		print("Connecting.. - " + String(http.get_status()))
@@ -46,7 +46,46 @@ func get_server_list():
 	
 	#assert(http.get_status() == HTTPClient.STATUS_BODY or http.get_status() == HTTPClient.STATUS_CONNECTED)
 	
-	print("resposne? ", http.has_response())
+	if http.has_response():
+		# If there is a response..
+		
+		headers = http.get_response_headers_as_dictionary() # Get response headers
+		print("code: ", http.get_response_code()) # Show response code
+		print("**headers:\\n", headers) # Show headers
+		
+		# Getting the HTTP Body
+		
+		if http.is_response_chunked():
+			# Does it use chunks?
+			print("Response is Chunked!")
+		else:
+			# Or just plain Content-Length
+			var bl = http.get_response_body_length()
+			print("Response Length: ",bl)
+
+		# This method works for both anyway
+
+		var rb = PoolByteArray() # Array that will hold the data
+
+		while http.get_status() == HTTPClient.STATUS_BODY:
+			# While there is body left to be read
+			http.poll()
+			var chunk = http.read_response_body_chunk() # Get a chunk
+			if chunk.size() == 0:
+				# Got nothing, wait for buffers to fill a bit
+				OS.delay_usec(1000)
+			else:
+				rb = rb + chunk # Append to read buffer
+
+		# Done!
+
+		print("bytes got: ", rb.size())
+		var text = rb.get_string_from_ascii()
+		print("Text: ", text)
+		var results = JSON.parse(text)
+		if results.error == OK and typeof(results.result) == TYPE_DICTIONARY:
+			var server_list = results.result["servers"]
+			$HBoxContainer/MarginContainer2/VBoxContainer2/GamesListContainer.update_list(server_list)
 	
 #	$HTTPRequest.request("https://nolic.simmarith.com")
 #
