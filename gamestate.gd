@@ -21,19 +21,27 @@ signal connection_succeeded()
 signal game_ended()
 signal game_error(what)
 
+func start_single_player():
+	start_game()
+	
 func start_host():
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(DEFAULT_PORT, MAX_PEERS)
 	get_tree().set_network_peer(peer)
 	save_peer_data(peer)
 	
+	master_server.send_server("Test",SERVER_IP,DEFAULT_PORT)
+	#Send info to master server
+	var timer = Timer.new()
+	timer.wait_time = 25
+	
 	#Start the game
 	start_game()
 	
 
-func join_server():
+func join_server(server_ip, port):
 	var peer = NetworkedMultiplayerENet.new()
-	peer.create_client(SERVER_IP, DEFAULT_PORT)
+	peer.create_client(server_ip, port)
 	get_tree().set_network_peer(peer)
 	save_peer_data(peer)
 	

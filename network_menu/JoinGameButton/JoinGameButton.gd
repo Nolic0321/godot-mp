@@ -21,3 +21,7 @@ func set_game_info(game_info: Dictionary):
 	name = game_name
 	text = game_name + " : " + game_ip
 	pass
+
+func _on_JoinGameButton_pressed():
+	gamestate.join_server(game_ip,game_port)
+	pass # Replace with function body.

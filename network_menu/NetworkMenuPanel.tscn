@@ -95,6 +95,3 @@ Join_Button = ExtResource( 3 )
 margin_right = 309.0
 margin_bottom = 292.0
 
-[node name="JoinGameButton" parent="HBoxContainer/MarginContainer2/VBoxContainer2/GamesListContainer/ButtonList" instance=ExtResource( 3 )]
-margin_right = 309.0
-

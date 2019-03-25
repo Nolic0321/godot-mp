@@ -9,3 +9,4 @@ rect_min_size = Vector2( 200, 30 )
 text = "Test Game Name"
 script = ExtResource( 1 )
 
+[connection signal="pressed" from="." to="." method="_on_JoinGameButton_pressed"]
