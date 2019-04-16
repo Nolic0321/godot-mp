@@ -6,11 +6,12 @@ export (PackedScene) var Join_Button
 func _ready():
 	pass # Replace with function body.
 
-func update_list(server_list: Array):
+func update_list(server_list: Array, parent_node_path: NodePath):
 	if server_list == null:
 		pass
 	for server in server_list:
 		var button := Join_Button.instance() as JoinButton
 		button.set_game_info(server)
 		$ButtonList.add_child(button)
+		button.connect("joining_game",get_node(parent_node_path),"hide")
 	pass

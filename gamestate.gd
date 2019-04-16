@@ -8,6 +8,9 @@ const MAX_PEERS = 12
 
 const SERVER_IP = "127.0.0.1"
 
+# Name of game server for joining list
+var server_name = "Test"
+
 # Name for my player
 var player_name = "The Client"
 
@@ -29,16 +32,21 @@ func start_host():
 	peer.create_server(DEFAULT_PORT, MAX_PEERS)
 	get_tree().set_network_peer(peer)
 	save_peer_data(peer)
+	_send_host_data()
 	
-	master_server.send_server("Test",SERVER_IP,DEFAULT_PORT)
-	#Send info to master server
+	#Send info to master server every 25 seconds
 	var timer = Timer.new()
 	timer.wait_time = 25
-	
+	timer.autostart = true
+	add_child(timer)
+	timer.connect("timeout",self,"_send_host_data")
 	#Start the game
 	start_game()
 	
-
+func _send_host_data():
+	print_debug("Sending host data")
+	master_server.send_server(server_name,SERVER_IP,DEFAULT_PORT)
+	
 func join_server(server_ip, port):
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_client(server_ip, port)

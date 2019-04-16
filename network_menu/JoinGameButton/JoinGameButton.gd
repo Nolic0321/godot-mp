@@ -1,5 +1,6 @@
 class_name JoinButton
 extends Button
+signal joining_game
 
 var  game_name : String
 var  game_ip : String
@@ -19,9 +20,10 @@ func set_game_info(game_info: Dictionary):
 	game_port = game_info["port"]
 	
 	name = game_name
-	text = game_name + " : " + game_ip
+	text = game_name
 	pass
 
 func _on_JoinGameButton_pressed():
 	gamestate.join_server(game_ip,game_port)
+	emit_signal("joining_game")
 	pass # Replace with function body.

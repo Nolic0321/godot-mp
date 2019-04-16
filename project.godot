@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Godot_MP"
-run/main_scene="res://network_menu/NetworkMenu.tscn"
+run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -63,4 +63,5 @@ ssl/certificates="res://ca-certificates.crt"
 
 [rendering]
 
+threads/thread_model=2
 environment/default_environment="res://default_env.tres"
