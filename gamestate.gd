@@ -4,9 +4,9 @@ extends Node
 const DEFAULT_PORT = 10567
 
 # Max number of players
-const MAX_PEERS = 12
+var MAX_PEERS = 12
 
-const SERVER_IP = "127.0.0.1"
+var host_ip = "127.0.0.1"
 
 # Name of game server for joining list
 var server_name = "Test"
@@ -17,6 +17,9 @@ var player_name = "The Client"
 # Names for remote players in id:name format
 var players = {}
 
+# UPNP for network connections
+onready var upnp = UPNP.new()
+
 # Signals to let lobby GUI know what's going on
 signal player_list_changed()
 signal connection_failed()
@@ -24,10 +27,13 @@ signal connection_succeeded()
 signal game_ended()
 signal game_error(what)
 
+
+	
 func start_single_player():
 	start_game()
 	
 func start_host():
+	upnp.add_port_mapping(DEFAULT_PORT)
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(DEFAULT_PORT, MAX_PEERS)
 	get_tree().set_network_peer(peer)
@@ -45,11 +51,11 @@ func start_host():
 	
 func _send_host_data():
 	print_debug("Sending host data")
-	master_server.send_server(server_name,SERVER_IP,DEFAULT_PORT)
+	master_server.send_server(server_name,upnp.query_external_address(),DEFAULT_PORT)
 	
-func join_server(server_ip, port):
+func join_server(host_ip, port):
 	var peer = NetworkedMultiplayerENet.new()
-	peer.create_client(server_ip, port)
+	peer.create_client(host_ip, port)
 	get_tree().set_network_peer(peer)
 	save_peer_data(peer)
 	
@@ -133,3 +139,15 @@ func _ready():
 	get_tree().connect("connected_to_server", self, "_connected_ok")
 	get_tree().connect("connection_failed", self, "_connected_fail")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
+	# Setup UPNP for network discovery
+#	upnp.discover_ipv6 = true
+	var upnp_result = upnp.discover()
+	if upnp_result != UPNP.UPNP_RESULT_SUCCESS:
+		print_debug("UPNP discover failed with code " + upnp_result)
+	elif upnp_result == UPNP.UPNP_RESULT_SUCCESS:
+		host_ip = upnp.query_external_address()
+
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+		upnp.delete_port_mapping(DEFAULT_PORT)
+		get_tree().quit() # default behavior
