@@ -26,6 +26,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
+global_debug="*res://global_debug.gd"
 gamestate="*res://gamestate.gd"
 master_server="*res://master_server.gd"
 

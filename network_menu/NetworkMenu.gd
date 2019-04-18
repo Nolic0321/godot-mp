@@ -11,7 +11,6 @@ func _on_Single_Player_Pressed():
 
 func _on_Host_pressed():
 	gamestate.start_host()
-	self.hide()
 
 # Respond to user entering a username
 # Save the string to the (global) gamestate that will be used when connecting
@@ -22,7 +21,6 @@ func _on_Username_text_changed():
 # Refreshes list of joinable games
 # Pings master server for list and updtes the UI container
 func refresh_list():
-		print_debug("Updating game list...")
 		$RequestGameList.request("https://api.simmarith.com/nolic/server")
 
 # HTTPRequest for server list response
@@ -37,3 +35,8 @@ func _on_HTTPRequest_request_completed(results, response_code, headers, body):
 
 func _on_RefreshList_pressed():
 	refresh_list()
+
+
+func _on_GameName_text_changed():
+	gamestate.server_name = $HBoxContainer/MarginContainer/VBoxContainer/GameName.text
+	pass # Replace with function body.

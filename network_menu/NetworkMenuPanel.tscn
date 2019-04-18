@@ -6,6 +6,7 @@
 [ext_resource path="res://network_menu/JoinGameButton/JoinGameButton.tscn" type="PackedScene" id=4]
 
 [node name="GameMenuPanel" type="Panel"]
+editor/display_folded = true
 margin_right = 492.0
 margin_bottom = 338.0
 script = ExtResource( 1 )
@@ -49,10 +50,30 @@ margin_bottom = 162.0
 rect_min_size = Vector2( 161, 75 )
 text = "Single Player"
 
-[node name="Host" type="Button" parent="HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="SpacerLabel" type="Label" parent="HBoxContainer/MarginContainer/VBoxContainer"]
 margin_top = 166.0
 margin_right = 161.0
-margin_bottom = 241.0
+margin_bottom = 180.0
+align = 1
+
+[node name="GameNamelabel" type="Label" parent="HBoxContainer/MarginContainer/VBoxContainer"]
+margin_top = 184.0
+margin_right = 161.0
+margin_bottom = 198.0
+text = "Game Name"
+align = 1
+
+[node name="GameName" type="TextEdit" parent="HBoxContainer/MarginContainer/VBoxContainer"]
+margin_top = 202.0
+margin_right = 161.0
+margin_bottom = 237.0
+rect_min_size = Vector2( 150, 35 )
+mouse_default_cursor_shape = 0
+
+[node name="Host" type="Button" parent="HBoxContainer/MarginContainer/VBoxContainer"]
+margin_top = 241.0
+margin_right = 161.0
+margin_bottom = 316.0
 rect_min_size = Vector2( 0, 75 )
 text = "Host Game"
 
@@ -135,6 +156,8 @@ use_threads = true
 
 [connection signal="text_changed" from="HBoxContainer/MarginContainer/VBoxContainer/Username" to="." method="_on_Username_text_changed"]
 [connection signal="pressed" from="HBoxContainer/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_Single_Player_Pressed"]
+[connection signal="text_changed" from="HBoxContainer/MarginContainer/VBoxContainer/GameName" to="." method="_on_Username_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/MarginContainer/VBoxContainer/GameName" to="." method="_on_GameName_text_changed"]
 [connection signal="pressed" from="HBoxContainer/MarginContainer/VBoxContainer/Host" to="." method="_on_Host_pressed"]
 [connection signal="pressed" from="HBoxContainer/MarginContainer2/VBoxContainer2/HBoxContainer/MarginContainer/RefreshList" to="." method="_on_RefreshList_pressed"]
 [connection signal="request_completed" from="RequestGameList" to="." method="_on_HTTPRequest_request_completed"]
