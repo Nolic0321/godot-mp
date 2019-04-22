@@ -34,6 +34,10 @@ signal game_error(what)
 func start_single_player():
 	start_game()
 	
+func is_game_name_available(game_name) -> bool:
+	
+	return true
+
 func start_host():
 	upnp.add_port_mapping(DEFAULT_PORT)
 	var peer = NetworkedMultiplayerENet.new()
