@@ -28,6 +28,7 @@ signal connection_failed()
 signal connection_succeeded()
 signal game_ended()
 signal game_error(what)
+signal unregister_player(id)
 
 
 	
@@ -125,6 +126,8 @@ remote func register_player(id : int, new_player_name : String):
 	
 
 remote func unregister_player(id):
+	print_debug("Unregistering player " + String(id))
+	emit_signal("unregister_player",id)
 	players.erase(id)
 	
 # Callback from SceneTree
@@ -136,10 +139,9 @@ func _player_connected(id):
 
 # Callback from SceneTree
 func _player_disconnected(id):
-	if get_tree().is_network_server() and is_instance_valid(players[id]):
-		if has_node("/root/Game"): # Game is in progress
-			emit_signal("game_error", "Player " + players[id] + " disconnected")
-		else: # Game is not in progress
+	print_debug("Player " + String(id) + " has disconnected")
+	if get_tree().is_network_server():
+		if has_node("/root/GameScene"): # Game is in progress
 			# If we are the server, tell all players to unregister disc player
 			unregister_player(id)
 			for p_id in players:
