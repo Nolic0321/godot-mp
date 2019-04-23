@@ -9,25 +9,31 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "CharacterStats",
+"class": "Actor",
+"language": "GDScript",
+"path": "res://characters/actor/Actor.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "CharacterStats",
 "language": "GDScript",
-"path": "res://Characters/CharacterStats/CharacterStats.gd"
-}, {
-"base": "CharacterStats",
-"class": "Entity",
-"language": "GDScript",
-"path": "res://Characters/entity/Entity.gd"
+"path": "res://characters/characterstats/CharacterStats.gd"
 }, {
 "base": "Button",
 "class": "JoinButton",
 "language": "GDScript",
 "path": "res://network_menu/JoinGameButton/JoinGameButton.gd"
+}, {
+"base": "Area2D",
+"class": "Weapon",
+"language": "GDScript",
+"path": "res://characters/weapons/Weapon.gd"
 } ]
 _global_script_class_icons={
+"Actor": "",
 "CharacterStats": "",
-"Entity": "",
-"JoinButton": ""
+"JoinButton": "",
+"Weapon": ""
 }
 
 [application]
@@ -64,11 +70,17 @@ move_right={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
  ]
 }
+attack={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
 
 [layer_names]
 
 2d_physics/layer_1="player"
 2d_physics/layer_2="entity"
+2d_physics/layer_3="weapon"
 
 [network]
 

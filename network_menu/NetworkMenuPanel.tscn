@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://network_menu/NetworkMenu.gd" type="Script" id=1]
-[ext_resource path="res://chat_panel/refresh.png" type="Texture" id=2]
+[ext_resource path="res://network_menu/GamesList/refresh(white).png" type="Texture" id=2]
 [ext_resource path="res://network_menu/GamesList/GamesList.gd" type="Script" id=3]
 [ext_resource path="res://network_menu/JoinGameButton/JoinGameButton.tscn" type="PackedScene" id=4]
 
