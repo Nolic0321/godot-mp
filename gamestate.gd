@@ -84,7 +84,6 @@ func load_game(result, responsecode, headers, body):
 	
 	if hostip == external:
 		hostip = DEFAULT_IP
-		hostport = port
 	
 	var peer = NetworkedMultiplayerENet.new()
 	var conn_result = peer.create_client(hostip, hostport)
@@ -102,7 +101,7 @@ func start_game():
 	get_tree().get_root().add_child(world)
 	
 	#Spawn Player
-	var player = preload("res://entity/Entity.tscn").instance()
+	var player = preload("res://Characters/entity/Player/Player.tscn").instance()
 	player.name = String(selfPeerID)
 	player.set_name(player_name)
 	player.set_network_master(selfPeerID)
@@ -126,7 +125,7 @@ remote func register_player(id : int, new_player_name : String):
 	#Adding registered player on client side
 	global_debug.debug_client("Creating player " + new_player_name)
 	players[id] = new_player_name
-	var otherplayer = preload("res://entity/Entity.tscn").instance()
+	var otherplayer = preload("res://Characters/entity/Player/Player.tscn").instance()
 	otherplayer.name = String(id)
 	otherplayer.set_name(new_player_name)
 	otherplayer.set_network_master(id)

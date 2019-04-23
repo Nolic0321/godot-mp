@@ -9,12 +9,24 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "CharacterStats",
+"language": "GDScript",
+"path": "res://Characters/CharacterStats/CharacterStats.gd"
+}, {
+"base": "CharacterStats",
+"class": "Entity",
+"language": "GDScript",
+"path": "res://Characters/entity/Entity.gd"
+}, {
 "base": "Button",
 "class": "JoinButton",
 "language": "GDScript",
 "path": "res://network_menu/JoinGameButton/JoinGameButton.gd"
 } ]
 _global_script_class_icons={
+"CharacterStats": "",
+"Entity": "",
 "JoinButton": ""
 }
 
