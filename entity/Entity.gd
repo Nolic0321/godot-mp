@@ -13,6 +13,9 @@ func _ready():
 	
 	pass
 
+func _is_dying():
+	pass
+
 func _physics_process(delta):
 	var motion = Vector2()
 	if is_network_master():
@@ -32,5 +35,6 @@ func _physics_process(delta):
 	move_and_slide(motion * MOTION_SPEED)
 	if not is_network_master():
 		slave_pos = position # To avoid jitter
+
 func set_name(name):
 	$Label.text = name

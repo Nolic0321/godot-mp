@@ -3,22 +3,13 @@
 [ext_resource path="res://GameScene.gd" type="Script" id=1]
 
 [node name="GameScene" type="Node"]
-
 script = ExtResource( 1 )
 spawn_radius = 25
 
-[node name="SpawnPosition" type="Position2D" parent="." index="0"]
-
+[node name="SpawnPosition" type="Position2D" parent="."]
 position = Vector2( 50, 50 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="Players" type="Node" parent="." index="1"]
+[node name="Players" type="Node" parent="."]
 
-[node name="HTTPRequest" type="HTTPRequest" parent="." index="2"]
-
-download_file = ""
-use_threads = false
-body_size_limit = -1
-max_redirects = 8
-
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
 
