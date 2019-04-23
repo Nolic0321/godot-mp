@@ -3,10 +3,17 @@ extends Node
 # Default game port
 const DEFAULT_PORT = 8996
 
+# Default game ip
+const DEFAULT_IP = "127.0.0.1"
+
 # Max number of players
 var MAX_PEERS = 12
 
-const DEFAULT_IP = "127.0.0.1"
+# External IP for connecting
+var external
+
+# User Selected Port
+var port
 
 # Name of game server for joining list
 var server_name = "Test2"
@@ -17,7 +24,8 @@ var player_name = "The Client"
 # Names for remote players in id:name format
 var players = {}
 
-var game_menu_path = "/root/Game/GameMenuPanel"
+# NodePath to the game menu
+var game_menu_path
 
 # UPNP for network connections
 onready var upnp = UPNP.new()
@@ -40,9 +48,11 @@ func is_game_name_available(game_name) -> bool:
 	return true
 
 func start_host():
-	upnp.add_port_mapping(DEFAULT_PORT)
+	if !is_instance_valid(port):
+		port = DEFAULT_PORT
+	upnp.add_port_mapping(port)
 	var peer = NetworkedMultiplayerENet.new()
-	peer.create_server(DEFAULT_PORT, MAX_PEERS)
+	peer.create_server(port, MAX_PEERS)
 	get_tree().set_network_peer(peer)
 	save_peer_data(peer)
 	_send_host_data()
@@ -58,7 +68,7 @@ func start_host():
 	start_game()
 	
 func _send_host_data():
-	master_server.send_server(server_name,upnp.query_external_address(),DEFAULT_PORT)
+	master_server.send_server(server_name,external,port)
 	
 func join_server(name : String):
 	var http = HTTPRequest.new()
@@ -72,14 +82,12 @@ func load_game(result, responsecode, headers, body):
 	var hostip = json.result["ip"]
 	var hostport = json.result["port"]
 	
-	if hostip == upnp.query_external_address():
-		print_debug("Local host; using ip 127.0.0.1")
+	if hostip == external:
 		hostip = DEFAULT_IP
-		hostport = DEFAULT_PORT
+		hostport = port
 	
 	var peer = NetworkedMultiplayerENet.new()
 	var conn_result = peer.create_client(hostip, hostport)
-	print_debug("[CLIENT] gamestate: Client connection code : " + String(conn_result))
 	get_tree().set_network_peer(peer)
 	save_peer_data(peer)
 	
@@ -126,7 +134,6 @@ remote func register_player(id : int, new_player_name : String):
 	
 
 remote func unregister_player(id):
-	print_debug("Unregistering player " + String(id))
 	emit_signal("unregister_player",id)
 	players.erase(id)
 	
@@ -139,7 +146,6 @@ func _player_connected(id):
 
 # Callback from SceneTree
 func _player_disconnected(id):
-	print_debug("Player " + String(id) + " has disconnected")
 	if get_tree().is_network_server():
 		if has_node("/root/GameScene"): # Game is in progress
 			# If we are the server, tell all players to unregister disc player
@@ -178,6 +184,7 @@ func _ready():
 	if upnp_result != UPNP.UPNP_RESULT_SUCCESS:
 		print_debug("UPNP discover failed with code " + upnp_result)
 	
+	external = upnp.query_external_address()
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self,"_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_ok")
@@ -186,5 +193,5 @@ func _ready():
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-		upnp.delete_port_mapping(DEFAULT_PORT)
+		upnp.delete_port_mapping(port)
 		get_tree().quit() # default behavior

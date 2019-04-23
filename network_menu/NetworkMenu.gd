@@ -7,6 +7,11 @@ func _ready():
 	gamestate.game_menu_path = get_path() 	# Update the gamestate to have our nodepath
 	$RequestGameList.use_threads = true		# Have HTTPRequests use separate threads
 	refresh_list()			# Refresh the game list on load
+	
+	# Set Default Values
+	$HBoxContainer/MarginContainer/VBoxContainer/Username.text = gamestate.player_name
+	$HBoxContainer/MarginContainer/VBoxContainer/Port.text = String(gamestate.DEFAULT_PORT)
+	$HBoxContainer/MarginContainer/VBoxContainer/GameName.text = gamestate.server_name
 	pass
 
 func _on_Single_Player_Pressed():
@@ -65,4 +70,9 @@ func _on_RefreshList_pressed():
 
 func _on_GameName_text_changed():
 	gamestate.server_name = $HBoxContainer/MarginContainer/VBoxContainer/GameName.text
-	pass # Replace with function body.
+	
+
+
+func _on_Port_text_changed():
+	gamestate.port = int($HBoxContainer/MarginContainer/VBoxContainer/Port.text)
+	
