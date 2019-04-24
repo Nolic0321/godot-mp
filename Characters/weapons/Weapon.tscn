@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://characters/weapons/Weapon.gd" type="Script" id=1]
+[ext_resource path="res://Characters/weapons/Weapon.gd" type="Script" id=1]
 
 [node name="Weapon" type="Area2D"]
 gravity = 0.0

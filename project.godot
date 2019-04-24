@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "CharacterStats",
 "class": "Actor",
 "language": "GDScript",
-"path": "res://characters/actor/Actor.gd"
+"path": "res://Characters/actor/Actor.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "CharacterStats",
 "language": "GDScript",
-"path": "res://characters/characterstats/CharacterStats.gd"
+"path": "res://Characters/CharacterStats/CharacterStats.gd"
 }, {
 "base": "Button",
 "class": "JoinButton",
@@ -27,7 +27,7 @@ _global_script_classes=[ {
 "base": "Area2D",
 "class": "Weapon",
 "language": "GDScript",
-"path": "res://characters/weapons/Weapon.gd"
+"path": "res://Characters/weapons/Weapon.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",
