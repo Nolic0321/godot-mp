@@ -1,4 +1,0 @@
-#!/bin/bash
-
-godot --export "linux" dist/linux/godotMP
-godot --export "windows" dist/windows/godotMP
