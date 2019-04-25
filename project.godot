@@ -9,25 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Reference",
+"base": "CharacterStats",
 "class": "Actor",
 "language": "GDScript",
-"path": "res://character/actor/Actor.gd"
+"path": "res://characters/actor/Actor.gd"
 }, {
-"base": "Reference",
+"base": "KinematicBody2D",
 "class": "CharacterStats",
 "language": "GDScript",
-"path": "res://character/characterstats/CharacterStats.gd"
+"path": "res://characters/CharacterStats/CharacterStats.gd"
 }, {
 "base": "Button",
 "class": "JoinButton",
 "language": "GDScript",
 "path": "res://network_menu/JoinGameButton/JoinGameButton.gd"
 }, {
-"base": "Reference",
+"base": "Area2D",
 "class": "Weapon",
 "language": "GDScript",
-"path": "res://character/weapons/Weapon.gd"
+"path": "res://characters/weapons/Weapon.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",

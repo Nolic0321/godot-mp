@@ -11,8 +11,8 @@ export var defense : int
 signal isdying
 signal health_changed
 
-func attack(other : Object):
-	if other.has_method("take_damage"):
+func attack(other : CharacterStats):
+	if other:
 		other.take_damage(attack)
 	
 func take_damage(damage : int):

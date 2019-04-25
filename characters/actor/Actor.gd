@@ -8,15 +8,15 @@ func _ready():
 	connect("isdying", self, "_is_dying")
 	
 	# Setup Health Bar Values
-	$HealthBar.max_value = health
-	$HealthBar.value = health
+	($HealthBar as TextureProgress).max_value = health
+	($HealthBar as TextureProgress).value = health
 	pass
 
 # Update the health bar to reflect current CharacterStat health
 # Should only be a response from the "health_changed" signal sent by
 # CharacterStats
 func _update_health_bar():
-	$HealthBar.value = health
+	($HealthBar as TextureProgress).value = health
 
 func _is_dying():
 	print_debug("ACTOR: Is Dying")
