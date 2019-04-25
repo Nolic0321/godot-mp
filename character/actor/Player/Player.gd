@@ -37,7 +37,10 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("attack") and $Sprite/ItemSnap.get_child_count() > 0:
 		$Sprite/ItemSnap.get_child(0).attack()
 	var motion = Vector2()
+	
+	# If we own this object then we set movement
 	if is_network_master():
+		# Check for character movement
 		if Input.is_action_pressed("move_left"):
 			motion += Vector2(-1, 0)
 		if Input.is_action_pressed("move_right"):
@@ -47,8 +50,13 @@ func _physics_process(delta):
 		if Input.is_action_pressed("move_down"):
 			motion += Vector2(0, 1)
 		rset("slave_pos",position)
+		
+		# Rotate weapon to aim at mouse
 		$Sprite/ItemSnap.look_at(get_global_mouse_position())
 		rset("item_rot",$Sprite/ItemSnap.rotation)
+		
+		# Check whether or not to rotate the sprite
+		_check_rotate_sprite()
 	else:
 		position = slave_pos
 		$Sprite/ItemSnap.rotation = item_rot
@@ -61,6 +69,16 @@ func _physics_process(delta):
 			
 	if not is_network_master():
 		slave_pos = position # To avoid jitter
+
+# Checks whether or not to flip the sprite.
+# We check the angle() between the sprite and mouse position
+# and if it's absolute value is greater than 1 we need to
+# flip the sprite node.
+func _check_rotate_sprite():
+	if abs((get_global_mouse_position() - position).angle()) > 1 and $Sprite.scale == Vector2(1,1):
+		$Sprite.scale = Vector2(-1,1)
+	elif abs((get_global_mouse_position() - position).angle()) < 1 and $Sprite.scale == Vector2(-1,1):
+		$Sprite.scale = Vector2(1,1)
 
 func set_name(name):
 	$Label.text = name

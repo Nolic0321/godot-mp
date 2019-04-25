@@ -192,5 +192,6 @@ func _ready():
 
 func _notification(what):
 	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-		upnp.delete_port_mapping(port)
+		if is_instance_valid(port):
+			upnp.delete_port_mapping(port)
 		get_tree().quit() # default behavior
