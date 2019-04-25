@@ -15,8 +15,9 @@ func _ready():
 # Update the health bar to reflect current CharacterStat health
 # Should only be a response from the "health_changed" signal sent by
 # CharacterStats
-func _update_health_bar():
+remote func _update_health_bar():
 	($HealthBar as TextureProgress).value = health
+	rpc("_update_health_bar")	# Update health bar on other clients
 
 func _is_dying():
 	print_debug("ACTOR: Is Dying")

@@ -4,7 +4,7 @@ const MOTION_SPEED = 90.0
 
 slave var slave_pos = Vector2()
 slave var slave_motion = Vector2()
-slave var item_rot
+slave var item_rot = 0.0
 
 export var auto_equipped_weapon : PackedScene
 
@@ -27,20 +27,24 @@ func equip_weapon(weapon : PackedScene):
 	
 	# Hook up "Hit" signal of new weapon
 	new_weapon.wielder = self
-	new_weapon.connect("hit",self,"attack")
+	new_weapon.connect("hit",self,"attack_target")
 	
-	
+func attack_target(other:CharacterStats):
+	rpc("attack",other)
+
 func _is_dying():
 	print_debug("PLAYER: Is Dying")
 	pass
 
 func _physics_process(delta):
-	if Input.is_action_just_pressed("attack") and $Sprite/ItemSnap.get_child_count() > 0:
-		($Sprite/ItemSnap.get_child(0) as Weapon).attack()
 	var motion = Vector2()
 	
 	# If we own this object then we set movement
 	if is_network_master():
+		# Check attack input
+		if Input.is_action_just_pressed("attack") and $Sprite/ItemSnap.get_child_count() > 0:
+			($Sprite/ItemSnap.get_child(0) as Node).rpc("attack")
+		
 		# Check for character movement
 		if Input.is_action_pressed("move_left"):
 			motion += Vector2(-1, 0)
@@ -59,6 +63,7 @@ func _physics_process(delta):
 		# Check whether or not to rotate the sprite
 		_check_rotate_sprite()
 	else:
+		# Set client object values
 		position = slave_pos
 		($Sprite/ItemSnap as Position2D).rotation = item_rot
 	
