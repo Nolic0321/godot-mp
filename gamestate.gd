@@ -16,10 +16,10 @@ var external
 var port
 
 # Name of game server for joining list
-var server_name = "Test2"
+var server_name = "Server"
 
 # Name for my player
-var player_name = "The Client"
+var player_name = "Host"
 
 # Names for remote players in id:name format
 var players = {}
@@ -116,7 +116,6 @@ remote func register_player(id : int, new_player_name : String):
 	# ************Server-side code************
 	
 	if get_tree().is_network_server():
-		print_debug("[SERVER] gamestate: Adding player " + String(id) + " " + new_player_name)
 		# If we are the server, let everyone know about the new player
 		rpc_id(id, "register_player", 1, player_name) # Send myself to new dude
 		for p_id in players: # Then, for each remote player
@@ -131,8 +130,8 @@ remote func register_player(id : int, new_player_name : String):
 	otherplayer.name = String(id)
 	otherplayer.set_name(new_player_name)
 	otherplayer.set_network_master(id)
-	emit_signal("add_client_player",otherplayer)
-	#get_node("/root/GameScene/Players").add_child(otherplayer)
+	#emit_signal("add_client_player",otherplayer)
+	get_node("/root/GameScene/Players").add_child(otherplayer)
 	
 
 remote func unregister_player(id):
@@ -150,7 +149,6 @@ func _player_disconnected(id):
 
 # Callback from SceneTree, only for clients (not server)
 func _connected_ok():
-	print_debug("[CLIENT] gamestate: Connected to server; registering with server")
 	# Registration of a client beings here, tell everyone that we are here
 	rpc("register_player", get_tree().get_network_unique_id(), player_name)
 	
@@ -179,7 +177,7 @@ func _ready():
 		print_debug("UPNP discover failed with code " + upnp_result)
 	
 	external = upnp.query_external_address()
-	get_tree().connect("network_peer_connected", self, "_player_connected")
+#	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self,"_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_ok")
 	get_tree().connect("connection_failed", self, "_connected_fail")

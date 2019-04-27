@@ -5,6 +5,7 @@ const MOTION_SPEED = 90.0
 slave var slave_pos = Vector2()
 slave var slave_motion = Vector2()
 slave var item_rot = 0.0
+slave var slave_sprite_rotate = Vector2()
 
 export var auto_equipped_weapon : PackedScene
 
@@ -51,11 +52,11 @@ func _physics_process(delta):
 			motion += Vector2(0, -1)
 		if Input.is_action_pressed("move_down"):
 			motion += Vector2(0, 1)
-		rset("slave_pos",position)
+		rset_unreliable("slave_pos",position)
 		
 		# Rotate weapon to aim at mouse
 		($Sprite/ItemSnap as Position2D).look_at(get_global_mouse_position())
-		rset("item_rot",($Sprite/ItemSnap as Position2D).rotation)
+		rset_unreliable("item_rot",($Sprite/ItemSnap as Position2D).rotation)
 		
 		# Check whether or not to rotate the sprite
 		_check_rotate_sprite()
@@ -63,6 +64,7 @@ func _physics_process(delta):
 		# Set client object values
 		position = slave_pos
 		($Sprite/ItemSnap as Position2D).rotation = item_rot
+		($Sprite as Sprite).scale = slave_sprite_rotate
 	
 	move_and_slide(motion * MOTION_SPEED) # Move player object
 			
@@ -78,6 +80,7 @@ func _check_rotate_sprite():
 		($Sprite as Sprite).scale = Vector2(-1,1)
 	elif abs((get_global_mouse_position() - position).angle()) < 1 and ($Sprite as Sprite).scale == Vector2(-1,1):
 		($Sprite as Sprite).scale = Vector2(1,1)
+	rset_unreliable("slave_sprite_rotate",($Sprite as Sprite).scale)
 
 func set_name(name):
 	($Label as Label).text = name

@@ -9,7 +9,7 @@ func _ready():
 	
 	# Setup Health Bar Values
 	($HealthBar as TextureProgress).max_value = health
-	($HealthBar as TextureProgress).value = health
+	_update_health_bar()
 	pass
 
 # Update the health bar to reflect current CharacterStat health
