@@ -74,5 +74,5 @@ func _on_GameName_text_changed():
 
 
 func _on_Port_text_changed():
-	gamestate.port = int($HBoxContainer/MarginContainer/VBoxContainer/Port.text)
+	gamestate.port = int(($HBoxContainer/MarginContainer/VBoxContainer/Port as TextEdit).text)
 	

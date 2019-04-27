@@ -50,7 +50,7 @@ func is_game_name_available(game_name) -> bool:
 	return true
 
 func start_host():
-	if !is_instance_valid(port):
+	if port == null:
 		port = DEFAULT_PORT
 	upnp.add_port_mapping(port)
 	var peer = NetworkedMultiplayerENet.new()
