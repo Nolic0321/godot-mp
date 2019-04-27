@@ -11,11 +11,12 @@ export var defense : int
 signal isdying
 signal health_changed
 
-remotesync func attack(other : CharacterStats):
-	if other:
-		other.take_damage(attack)
+func attack(other : CharacterStats):
+	if other and other.has_method("take_damage"):
+		if is_master_server()
+		other.rpc("take_damage",attack)
 	
-func take_damage(damage : int):
+master func take_damage(damage : int):
 	health -= (damage - defense)
 	rset("health",health)	# Set health value on other clients
 	if is_network_master():

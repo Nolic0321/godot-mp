@@ -27,10 +27,7 @@ func equip_weapon(weapon : PackedScene):
 	
 	# Hook up "Hit" signal of new weapon
 	new_weapon.wielder = self
-	new_weapon.connect("hit",self,"attack_target")
-	
-func attack_target(other:CharacterStats):
-	rpc("attack",other)
+	new_weapon.connect("hit",self,"attack")
 
 func _is_dying():
 	print_debug("PLAYER: Is Dying")

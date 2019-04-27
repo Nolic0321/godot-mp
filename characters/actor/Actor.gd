@@ -4,7 +4,7 @@ extends CharacterStats
 
 func _ready():
 	# Connect HealthBar update with health change
-	connect("health_changed",self,"_update_health_bar")
+	connect("health_changed",self,"update_health_bar")
 	connect("isdying", self, "_is_dying")
 	
 	# Setup Health Bar Values
@@ -15,10 +15,12 @@ func _ready():
 # Update the health bar to reflect current CharacterStat health
 # Should only be a response from the "health_changed" signal sent by
 # CharacterStats
-remote func _update_health_bar():
+func update_health_bar():
+	rpc("_update_health_bar")
+	
+remotesync func _update_health_bar():
 	($HealthBar as TextureProgress).value = health
-	rpc("_update_health_bar")	# Update health bar on other clients
 
-func _is_dying():
+puppet func _is_dying():
 	print_debug("ACTOR: Is Dying")
 	pass

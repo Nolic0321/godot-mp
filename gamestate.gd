@@ -37,6 +37,8 @@ signal connection_succeeded()
 signal game_ended()
 signal game_error(what)
 signal unregister_player(id)
+signal add_client_player(client)
+signal spawn_host_player(host)
 
 
 	
@@ -129,29 +131,22 @@ remote func register_player(id : int, new_player_name : String):
 	otherplayer.name = String(id)
 	otherplayer.set_name(new_player_name)
 	otherplayer.set_network_master(id)
-	get_node("/root/GameScene/Players").add_child(otherplayer)
+	emit_signal("add_client_player",otherplayer)
+	#get_node("/root/GameScene/Players").add_child(otherplayer)
 	
 
 remote func unregister_player(id):
 	emit_signal("unregister_player",id)
 	players.erase(id)
-	
-# Callback from SceneTree
-func _player_connected(id):
-	print_debug("Player connected " + String(id))
-	# This is not used in this demo, because _connected_ok is called for clients
-	# on success and will do the job.
-	pass
 
 # Callback from SceneTree
 func _player_disconnected(id):
 	if get_tree().is_network_server():
-		if has_node("/root/GameScene"): # Game is in progress
-			# If we are the server, tell all players to unregister disc player
-			unregister_player(id)
-			for p_id in players:
-				# Erase in the server
-				rpc_id(p_id, "unregister_player", id)
+		# If we are the server, tell all players to unregister disc player
+		unregister_player(id)
+		for p_id in players:
+			# Erase in the server
+			rpc_id(p_id, "unregister_player", id)
 
 # Callback from SceneTree, only for clients (not server)
 func _connected_ok():
