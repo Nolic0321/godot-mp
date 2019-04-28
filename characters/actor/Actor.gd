@@ -8,7 +8,7 @@ func _ready():
 	connect("isdying", self, "_is_dying")
 	
 	# Setup Health Bar Values
-	($HealthBar as TextureProgress).max_value = health
+	($HealthBar as TextureProgress).max_value = max_health
 	_update_health_bar()
 	pass
 

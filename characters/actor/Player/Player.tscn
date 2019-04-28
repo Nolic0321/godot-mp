@@ -2,7 +2,7 @@
 
 [ext_resource path="res://characters/actor/Actor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://characters/actor/Player/Player.gd" type="Script" id=2]
-[ext_resource path="res://characters/weapons/fist/Fist.tscn" type="PackedScene" id=3]
+[ext_resource path="res://weapons/fist/Fist.tscn" type="PackedScene" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "idle"
@@ -24,9 +24,10 @@ tracks/0/keys = {
 [node name="Player" index="0" instance=ExtResource( 1 )]
 position = Vector2( 269, 186 )
 script = ExtResource( 2 )
-health = 100
+max_health = 100
 attack = 20
 defense = 2
+MOTION_SPEED = 80.0
 auto_equipped_weapon = ExtResource( 3 )
 
 [node name="ItemSnap" type="Position2D" parent="Sprite" index="0"]

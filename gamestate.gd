@@ -101,16 +101,17 @@ func start_game():
 	#Load world node
 	var world = preload("res://GameScene.tscn").instance()
 	get_tree().get_root().add_child(world)
+	connect("add_client_player",world,"spawn_entity")
 	
 	#Spawn Player
-	var player = preload("res://characters/actor/Player/Player.tscn").instance()
+	var player : Player = preload("res://characters/actor/Player/Player.tscn").instance()
 	player.name = String(selfPeerID)
 	player.set_name(player_name)
 	player.set_network_master(selfPeerID)
-	world.spawn_entity(player)
+	emit_signal("add_client_player",player)
 		
 
-# Register new player to server; should only be called on server
+# Register new player to game
 remote func register_player(id : int, new_player_name : String):
 	
 	# ************Server-side code************
@@ -130,8 +131,7 @@ remote func register_player(id : int, new_player_name : String):
 	otherplayer.name = String(id)
 	otherplayer.set_name(new_player_name)
 	otherplayer.set_network_master(id)
-	#emit_signal("add_client_player",otherplayer)
-	get_node("/root/GameScene/Players").add_child(otherplayer)
+	emit_signal("add_client_player",otherplayer)
 	
 
 remote func unregister_player(id):

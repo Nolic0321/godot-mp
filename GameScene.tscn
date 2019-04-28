@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://GameScene.gd" type="Script" id=1]
+[ext_resource path="res://objects/pain/pain.tscn" type="PackedScene" id=2]
+[ext_resource path="res://game_over_menu/GameOverPopup.tscn" type="PackedScene" id=3]
 
 [node name="GameScene" type="Node"]
 script = ExtResource( 1 )
@@ -12,4 +14,50 @@ position = Vector2( 483.378, 308.463 )
 [node name="Players" type="Node" parent="."]
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Obstacles" type="Node" parent="."]
+editor/display_folded = true
+
+[node name="Pain" parent="Obstacles" instance=ExtResource( 2 )]
+position = Vector2( 901, 155 )
+
+[node name="Pain2" parent="Obstacles" instance=ExtResource( 2 )]
+position = Vector2( 309, 156 )
+
+[node name="Pain3" parent="Obstacles" instance=ExtResource( 2 )]
+position = Vector2( 207, 435 )
+
+[node name="Pain4" parent="Obstacles" instance=ExtResource( 2 )]
+position = Vector2( 833, 372 )
+
+[node name="Pain5" parent="Obstacles" instance=ExtResource( 2 )]
+position = Vector2( 499, 212 )
+
+[node name="Pain6" parent="Obstacles" instance=ExtResource( 2 )]
+position = Vector2( 602, 442 )
+
+[node name="Pain8" parent="Obstacles" instance=ExtResource( 2 )]
+position = Vector2( 662, 63 )
+
+[node name="Pain9" parent="Obstacles" instance=ExtResource( 2 )]
+position = Vector2( 377, 285 )
+
+[node name="Pain10" parent="Obstacles" instance=ExtResource( 2 )]
+position = Vector2( 741, 280 )
+
+[node name="Pain11" parent="Obstacles" instance=ExtResource( 2 )]
+position = Vector2( 395, 512 )
+
+[node name="Pain12" parent="Obstacles" instance=ExtResource( 2 )]
+position = Vector2( 180, 57 )
+
+[node name="Pain7" parent="Obstacles" instance=ExtResource( 2 )]
+position = Vector2( 120, 190 )
+
+[node name="Menus" type="Node" parent="."]
+
+[node name="GameOverPopup" parent="Menus" instance=ExtResource( 3 )]
+visible = false
 

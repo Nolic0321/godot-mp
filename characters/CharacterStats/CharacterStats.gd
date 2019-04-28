@@ -3,7 +3,8 @@ class_name CharacterStats
 extends KinematicBody2D
 
 # Base Character Stats
-export remotesync var health : int
+remotesync var health : int
+export var max_health : int
 export var attack : int
 export var defense : int
 
@@ -14,6 +15,8 @@ signal isdying
 signal health_changed
 
 func _ready():
+	if is_network_master():
+		health = max_health
 	# If we're not the master than this is a player that has already
 	# been in the game for some time and we need to sync up their
 	# existing stats with our new instance.

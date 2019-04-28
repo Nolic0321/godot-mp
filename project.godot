@@ -24,16 +24,28 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://network_menu/JoinGameButton/JoinGameButton.gd"
 }, {
+"base": "Actor",
+"class": "Player",
+"language": "GDScript",
+"path": "res://characters/actor/Player/Player.gd"
+}, {
 "base": "Area2D",
 "class": "Weapon",
 "language": "GDScript",
-"path": "res://characters/weapons/Weapon.gd"
+"path": "res://weapons/Weapon.gd"
+}, {
+"base": "StaticBody2D",
+"class": "physics_object",
+"language": "GDScript",
+"path": "res://objects/object.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",
 "CharacterStats": "",
 "JoinButton": "",
-"Weapon": ""
+"Player": "",
+"Weapon": "",
+"physics_object": ""
 }
 
 [application]
@@ -85,6 +97,11 @@ attack={
 [network]
 
 ssl/certificates="res://ca-certificates.crt"
+
+[physics]
+
+2d/default_gravity_vector=Vector2( 0, 0 )
+2d/default_linear_damp=0.8
 
 [rendering]
 
