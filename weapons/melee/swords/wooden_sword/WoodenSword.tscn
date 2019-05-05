@@ -7,7 +7,8 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1.64935, 13 )
 
-[node name="WoodenSword" index="0" instance=ExtResource( 1 )]
+[node name="WoodenSword" instance=ExtResource( 1 )]
+rotation = 0.0
 script = ExtResource( 2 )
 damage = 10.0
 

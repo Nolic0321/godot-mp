@@ -22,5 +22,5 @@ remotesync func _update_health_bar():
 	($HealthBar as TextureProgress).value = health
 
 puppet func _is_dying():
-	print_debug("ACTOR: Is Dying")
+	print_debug("ACTOR: %s Is Dying" % [name])
 	pass
