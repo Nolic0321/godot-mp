@@ -31,9 +31,10 @@ master func sync_stats():
 	emit_signal("health_changed")
 
 # Attack a target (other) that extends CharacterStats
-func attack(other : CharacterStats):
+func attack(other : CharacterStats, damage : float):
 	if other and other.has_method("take_damage"):
-		other.rpc("take_damage",attack)
+		print_debug(name + " is attacking " + other.name + " doing " + String(attack + damage) + " damage")
+		other.rpc("take_damage",attack + damage)
 	
 # Take damage of amount damage.
 # This will only be called on the controlling client
@@ -41,6 +42,7 @@ func attack(other : CharacterStats):
 # clients.
 master func take_damage(damage : int):
 	rset("health",health -(damage - defense))
+	print_debug(name + " is taking " + String(damage) + " damage; " + String(health) + " hp remaining")
 	emit_signal("health_changed")
 #	sync_stats()
 	if health <= 0:
