@@ -16,4 +16,4 @@ func get_item(item_name : String) -> Item:
 		if inventory[i].name == item_name:
 			item = inventory[i]
 			inventory.erase(i)
-	return item	
+	return item

@@ -110,7 +110,7 @@ func start_game():
 	player.set_name(player_name)
 	player.set_network_master(selfPeerID)
 	emit_signal("add_client_player",player)
-		
+
 
 # Register new player to game
 remote func register_player(id : int, new_player_name : String):
