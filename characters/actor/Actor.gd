@@ -15,10 +15,24 @@ func _ready():
 	
 	# Setup Inventory
 	inventory = Inventory.new(inventory_size)
-	
+	inventory.connect("item_added",self,"item_added_to_inventory")
+	inventory.connect("item_removed",self, "item_removed_from_inventory")
 	# Setup Health Bar Values
 	($HealthBar as TextureProgress).max_value = max_health
 	_update_health_bar()
+	pass
+	
+# Response to inventory's signal 'item_added'.  We will
+# simply do an actor notification
+func item_added_to_inventory(name : String):
+	$Notification.text = "+1 " + name
+	$AnimationPlayer.play("notify")
+	pass
+# Response to inventory's signal 'item_removed'.  We will
+# simply do an actor notification
+func item_removed_from_inventory(name : String):
+	$Notification.text = "-1 " + name
+	$AnimationPlayer.play("notify")
 	pass
 
 # Update the health bar to reflect current CharacterStat health

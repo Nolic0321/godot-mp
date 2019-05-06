@@ -28,7 +28,7 @@ script = ExtResource( 2 )
 max_health = 100
 attack = 0
 defense = 2
-inventory_size = 5
+inventory_size = 8
 MOTION_SPEED = 80.0
 auto_equipped_weapon = ExtResource( 3 )
 
