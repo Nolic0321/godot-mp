@@ -81,15 +81,7 @@ position = Vector2( 120, 190 )
 
 [node name="Resources" type="Node" parent="."]
 
-[node name="Tree" parent="Resources" instance=ExtResource( 5 )]
-position = Vector2( 425.917, 145.289 )
-
 [node name="Tree2" parent="Resources" instance=ExtResource( 5 )]
 position = Vector2( 388.102, 61.0348 )
-
-[node name="Tree3" parent="Resources" instance=ExtResource( 5 )]
-position = Vector2( 555.284, 23.8832 )
-
-[node name="Tree4" parent="Resources" instance=ExtResource( 5 )]
-position = Vector2( 625.606, 154.577 )
+num_of_resources = 200
 

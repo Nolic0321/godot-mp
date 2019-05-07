@@ -28,7 +28,7 @@ script = ExtResource( 2 )
 max_health = 100
 attack = 0
 defense = 2
-inventory_size = 8
+inventory_size = 25
 MOTION_SPEED = 80.0
 auto_equipped_weapon = ExtResource( 3 )
 
@@ -43,6 +43,6 @@ collision_mask = 8
 script = ExtResource( 4 )
 player_node = NodePath("../..")
 
-[node name="AnimationPlayer" parent="." index="3"]
+[node name="AnimationPlayer" parent="." index="4"]
 anims/idle = SubResource( 1 )
 

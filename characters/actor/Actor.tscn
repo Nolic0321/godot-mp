@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://characters/actor/Actor.gd" type="Script" id=1]
 [ext_resource path="res://characters/actor/entity.png" type="Texture" id=2]
@@ -7,39 +7,16 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
 
-[sub_resource type="Animation" id=2]
-resource_name = "notify"
-tracks/0/type = "value"
-tracks/0/path = NodePath("Notification:rect_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( -27, -13 ), Vector2( -26, -50 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Notification:custom_colors/font_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.7 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-
 [node name="Actor" type="KinematicBody2D"]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource( 1 )
+notif_range = 5
+
+[node name="Notifications" type="Node" parent="."]
 
 [node name="Sprite" type="Sprite" parent="."]
+z_index = 1
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -54,9 +31,6 @@ text = "test"
 align = 1
 valign = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/notify = SubResource( 2 )
-
 [node name="HealthBar" parent="." instance=ExtResource( 3 )]
 margin_left = -16.0
 margin_top = 18.0
@@ -64,11 +38,8 @@ margin_right = 16.0
 margin_bottom = 28.0
 value = 100.0
 
-[node name="Notification" type="Label" parent="."]
-margin_left = -26.0
-margin_top = -50.0
-margin_right = 28.0
-margin_bottom = -36.0
-custom_colors/font_color = Color( 1, 1, 1, 0 )
-text = "+1 wood"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="NotificationStop" type="Position2D" parent="."]
+position = Vector2( 0, -43 )
 
