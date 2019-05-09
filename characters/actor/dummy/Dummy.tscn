@@ -1,18 +1,27 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://characters/actor/Actor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://characters/actor/dummy/Dummy.gd" type="Script" id=2]
+[ext_resource path="res://characters/actor/Player/Player_spritesheet.png" type="Texture" id=3]
 
 [node name="Dummy" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 max_health = 50
 defense = 3
 
-[node name="Label" parent="." index="2"]
+[node name="Sprite" parent="." index="1"]
+texture = ExtResource( 3 )
+vframes = 2
+hframes = 4
+frame = 4
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2( 0, -8 )
+
+[node name="Label" parent="." index="3"]
 margin_left = -24.0
 margin_right = 27.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Dummy"
 valign = 1
-

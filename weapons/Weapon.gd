@@ -15,7 +15,7 @@ signal hit(body)
 # Response to Physics interaction to be passed onto the "holder"
 # of the weapon.  Holder will listen for the "hit" signal
 func _on_Weapon_body_entered(body : PhysicsBody2D) -> void:
-	if body.name == wielder.name:
+	if body and body.name == wielder.name:
 		return
 	can_hit = false
 	emit_signal("hit",body, damage)

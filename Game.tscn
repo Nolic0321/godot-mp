@@ -5,4 +5,3 @@
 [node name="Game" type="Node"]
 
 [node name="GameMenuPanel" parent="." instance=ExtResource( 1 )]
-

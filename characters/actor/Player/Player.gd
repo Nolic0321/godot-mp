@@ -71,6 +71,10 @@ func _physics_process(delta):
 			velocity += Vector2(0, MOTION_SPEED)
 		var collided_with : KinematicCollision2D = move_and_collide(velocity * delta)
 		
+		if velocity != Vector2(0,0):
+			$AnimationPlayer.play("walk")
+		else:
+			$AnimationPlayer.play("idle")
 		# Ensure that the player is within the screen size
 		# NOTE: Should use a bounding box instead to save on CPU
 		var window_size = OS.get_window_size()
