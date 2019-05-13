@@ -44,3 +44,4 @@ value = 100.0
 
 [node name="NotificationStop" type="Position2D" parent="."]
 position = Vector2( 0, -59 )
+

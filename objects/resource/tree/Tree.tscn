@@ -7,17 +7,17 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7, 5.25536 )
 
-[node name="Tree" instance=ExtResource( 1 )]
-scale = Vector2( 3, 3 )
+[node name="Tree" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 num_of_resources = 5
 
-[node name="Sprite" parent="." index="0"]
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2( 0, -5.33333 )
+shape = SubResource( 1 )
+
+[node name="Sprite" parent="." index="1"]
 position = Vector2( 0, -24.0997 )
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 32, 0, 48, 48 )
 
-[node name="CollisionShape2D" parent="." index="1"]
-position = Vector2( 0, -5.33333 )
-shape = SubResource( 1 )
