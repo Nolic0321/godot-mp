@@ -137,6 +137,7 @@ config/icon="res://icon.png"
 global_debug="*res://global_debug.gd"
 gamestate="*res://gamestate.gd"
 master_server="*res://master_server.gd"
+pathfinder="*res://pathfinder/astar_pathfinder.gd"
 
 [input]
 

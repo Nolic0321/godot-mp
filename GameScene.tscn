@@ -27,5 +27,4 @@ position = Vector2( 483.378, 308.463 )
 [node name="Resources" type="Node" parent="."]
 
 [node name="World" parent="." instance=ExtResource( 3 )]
-
 [connection signal="spawn_entity" from="World" to="." method="_on_World_spawn_entity"]

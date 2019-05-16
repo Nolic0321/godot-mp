@@ -6,9 +6,12 @@ var map : TileMap	# TileMap we're creating the paths for
 
 var walkable_nodes : Array # Array of walkable nodes
 
+signal path_calculated
+
 # Create an AStar Pathfinder Map using a TileMap and array of id's that are
 # walkable sprites on the TileMap
 func create_map(map : TileMap, walkable_ids : Array) -> void:
+	self.map = map
 	if !map:
 		printerr("Supplied map is not a TileMap")
 		return
@@ -18,7 +21,7 @@ func create_map(map : TileMap, walkable_ids : Array) -> void:
 		for node in map.get_used_cells_by_id(id):
 			walkable_nodes.append(node)
 			var node_id = get_cell_id(node)		# Calculate unique id for this node
-			astar.add_point(node_id,Vector2(node.x,node.y))		# Add node to the astar graph
+			astar.add_point(node_id,Vector3(node.x,node.y,0))		# Add node to the astar graph
 	
 	# Connect the nodes
 	for point in walkable_nodes:
@@ -43,6 +46,8 @@ func create_map(map : TileMap, walkable_ids : Array) -> void:
 			# If you set this value to false, it becomes a one-way path
 			# As we loop through all points we can set it to false
 			astar.connect_points(point_index, point_relative_index, true)
+	print_debug("PATHFINDER: Path map created")
+	emit_signal("path_calculated")
 
 # Get a PoolVector2Array of the world positions from world_start_point to world_end_point
 func get_world_path(world_start_point : Vector2, world_end_point : Vector2) -> PoolVector2Array:

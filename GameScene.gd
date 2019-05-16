@@ -36,7 +36,6 @@ func _delete_player(id):
 
 
 func _on_World_spawn_entity(entity, spawn : Vector2):
-	print_debug("Spawning " + str(entity.name))
 	entity.position = spawn
 	$Resources.add_child(entity)
 	pass # Replace with function body.

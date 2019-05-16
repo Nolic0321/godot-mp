@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7, 5.25536 )
 
-[node name="Tree" index="0" instance=ExtResource( 1 )]
+[node name="Tree" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 num_of_resources = 5
 
@@ -20,4 +20,3 @@ position = Vector2( 0, -24.0997 )
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 32, 0, 48, 48 )
-

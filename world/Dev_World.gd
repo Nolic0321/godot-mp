@@ -12,12 +12,12 @@ signal spawn_entity
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	spawn_spawnables()
+	pathfinder.create_map(($Map as TileMap),[2])
 	pass # Replace with function body.
 
 # Instantiates and places all spawnable objects.  
 # Objects should have a scene and should be placed in the Spawnables Tilemap
 func spawn_spawnables():
-	print_debug("DEV_WORLD: Spawning spawnables")
 	var spawnables : TileMap = $Spawnables
 	var dummie_cells = spawnables.get_used_cells_by_id(dummy_id)
 	for tile in dummie_cells:
@@ -26,7 +26,6 @@ func spawn_spawnables():
 		var object = dummy_object.instance()
 		object.add_to_group("dummies")
 		object.name = "Dummy " + str(get_tree().get_nodes_in_group("dummies").size())
-		print_debug("DEV_WORLD: Spawning " + str(object.name))
 		emit_signal("spawn_entity",object,spawn)
 	
 	var tree_cells = spawnables.get_used_cells_by_id(tree_id)
