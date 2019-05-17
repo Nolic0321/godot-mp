@@ -9,6 +9,7 @@
 script = ExtResource( 2 )
 max_health = 50
 defense = 3
+wander_range = 3.0
 
 [node name="Sprite" parent="." index="1"]
 texture = ExtResource( 3 )
@@ -28,4 +29,5 @@ text = "Dummy"
 valign = 1
 
 [node name="PathRunner" parent="." index="7" instance=ExtResource( 4 )]
+LERPTIME = 1.0
 target_transform = NodePath("..")

@@ -56,7 +56,7 @@ func get_world_path(world_start_point : Vector2, world_end_point : Vector2) -> P
 	var world_path_result : PoolVector2Array
 	var map_path = astar.get_point_path(get_cell_id(map_start),get_cell_id(map_end))
 	for node in map_path:
-		world_path_result.append(map.map_to_world(node))
+		world_path_result.append(map.map_to_world(Vector2(node.x,node.y)))
 	return world_path_result
 
 # Check whether the cell is outside of the TileMap bounds
