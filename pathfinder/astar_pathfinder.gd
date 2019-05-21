@@ -4,7 +4,11 @@ var astar = AStar.new()
 
 var map : TileMap	# TileMap we're creating the paths for
 
-var walkable_nodes : Array # Array of walkable nodes
+var walkable_nodes : Array = [] # Array of walkable nodes
+
+var map_width : int		#Width of map; used to calculate map node ids
+
+var connected_points : Array = []
 
 signal path_calculated
 
@@ -12,6 +16,7 @@ signal path_calculated
 # walkable sprites on the TileMap
 func create_map(map : TileMap, walkable_ids : Array) -> void:
 	self.map = map
+	map_width = get_map_width()
 	if !map:
 		printerr("Supplied map is not a TileMap")
 		return
@@ -45,8 +50,8 @@ func create_map(map : TileMap, walkable_ids : Array) -> void:
 			# connection to be bilateral: from point A to B and B to A
 			# If you set this value to false, it becomes a one-way path
 			# As we loop through all points we can set it to false
-			astar.connect_points(point_index, point_relative_index, true)
-	print_debug("PATHFINDER: Path map created")
+			astar.connect_points(point_index, point_relative_index, false)
+			connected_points.append(PoolVector2Array([point,point_relative]))
 	emit_signal("path_calculated")
 
 # Get a PoolVector2Array of the world positions from world_start_point to world_end_point
@@ -54,7 +59,9 @@ func get_world_path(world_start_point : Vector2, world_end_point : Vector2) -> P
 	var map_start = map.world_to_map(world_start_point)
 	var map_end = map.world_to_map(world_end_point)
 	var world_path_result : PoolVector2Array
-	var map_path = astar.get_point_path(get_cell_id(map_start),get_cell_id(map_end))
+	var start_id = get_cell_id(map_start)
+	var end_id = get_cell_id(map_end)
+	var map_path = astar.get_point_path(start_id,end_id)
 	for node in map_path:
 		world_path_result.append(map.map_to_world(Vector2(node.x,node.y)))
 	return world_path_result
@@ -66,10 +73,8 @@ func is_outside_map_bounds(cell : Vector2) -> bool:
 # Calculates and returns the TileMap width in cells
 func get_map_width() -> float:
 	# Determine the rect of used cells in the tilemap
-	var map_rect = map.get_used_rect()
-	# Get the Cell of the x-end of the Rect
-	return map.world_to_map(map_rect.position + map_rect.size).x
+	return map.get_used_rect().size[0]
 
 # Calculated unique id for the TileMap Cell provided
 func get_cell_id(cell : Vector2) -> float:
-		return cell.x + cell.y * get_map_width()
+		return cell.x + cell.y * map_width

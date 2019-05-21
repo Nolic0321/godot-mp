@@ -5,14 +5,16 @@ export var dummy_id : int	#Tile ID uses for dummy cells
 # Tree Object to Spawn
 var tree_object : PackedScene = preload("res://objects/resource/tree/Tree.tscn")
 # Dummy Object to Spawn
-var dummy_object : PackedScene = preload("res://characters/actor/dummy/Dummy.tscn")
+var dummy_object : PackedScene = preload("res://characters/actor/npc/moving/dummy/Dummy.tscn")
+
+var dummy_paths : Array
 
 signal spawn_entity
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	spawn_spawnables()
 	pathfinder.create_map(($Map as TileMap),[2])
+	spawn_spawnables()
 	pass # Replace with function body.
 
 # Instantiates and places all spawnable objects.  
@@ -21,6 +23,8 @@ func spawn_spawnables():
 	var spawnables : TileMap = $Spawnables
 	var dummie_cells = spawnables.get_used_cells_by_id(dummy_id)
 	for tile in dummie_cells:
+		if pathfinder.is_outside_map_bounds(tile):
+			continue
 		var spawn : Vector2 = spawnables.map_to_world(tile)
 		spawnables.set_cell(tile.x, tile.y, -1)
 		var object = dummy_object.instance()

@@ -6,7 +6,7 @@
 
 [node name="GameScene" type="Node"]
 script = ExtResource( 1 )
-spawn_radius = 500
+spawn_radius = 100
 
 [node name="Menus" type="Node" parent="."]
 editor/display_folded = true

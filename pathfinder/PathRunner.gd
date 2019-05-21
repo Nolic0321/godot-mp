@@ -1,3 +1,4 @@
+class_name PathRunner
 extends Position2D
 
 export(float) var LERPTIME = 2.0
@@ -15,16 +16,12 @@ var started_lerping
 var is_lerping = false
 onready var moving_target = get_node(target_transform)
 
-
-
-
 var velocity = Vector2()
 
 signal path_completed
 
 func _ready():
 	_change_state(STATES.IDLE)
-	emit_signal("path_completed")
 
 func _change_state(new_state):
 	_state = new_state
@@ -42,6 +39,8 @@ func traverse_path(new_path):
 	_change_state(STATES.FOLLOW)
 
 func _process(delta):
+	# NPCs die here sometimes because the IDLE state is true however the
+	# "path_completed" signal isn't fired or isn't received properly.  COME HERE AND FIX!
 	if not _state == STATES.FOLLOW:
 		return
 	var arrived_to_next_point = move_to(target_point_world)
@@ -57,6 +56,7 @@ func _process(delta):
 
 # We should look into Tweening this later
 func move_to(world_position):
+#	print_debug("%s is moving to %s from %s" % [moving_target.name,world_position, start_position])
 	if Engine.time_scale == 0:
 		return
 	if(!is_lerping):
@@ -65,27 +65,12 @@ func move_to(world_position):
 	
 	# This will eventually go to 1
 	var percentCompleted = ((OS.get_ticks_msec() - started_lerping))/LERPTIME
-	percentCompleted *= _speed_multiplier
-	percentCompleted *= Engine.time_scale
+#	percentCompleted *= _speed_multiplier
+#	percentCompleted *= Engine.time_scale
 	if(percentCompleted <= 1):
 		moving_target.global_position = start_position.linear_interpolate(world_position,percentCompleted)
 	return percentCompleted >= 1
 
 func _on_Timer_timeout():
 	pass # Replace with function body.
-	
-func _draw():
-	if not path and pathfinder.map:
-		return
-	var _half_cell_size = pathfinder.map.cell_size / 2
-	var start_position = path[0]
-	var target_position = path[len(path) - 1]
-
-
-	var last_point = pathfinder.map.map_to_world(Vector2(start_position.x, start_position.y)) + _half_cell_size
-	for index in range(1, len(path)):
-		var current_point = pathfinder.map.map_to_world(Vector2(path[index].x, path[index].y)) + _half_cell_size
-		draw_line(last_point, current_point, Color('#fff'), .3, true)
-		draw_circle(current_point, .3 * 2.0, Color('#fff'))
-		last_point = current_point
 

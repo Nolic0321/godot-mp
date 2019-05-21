@@ -126,7 +126,6 @@ remote func register_player(id : int, new_player_name : String):
 	#*****************************************
 	
 	#Adding registered player on client side
-	global_debug.debug_client("Creating player " + new_player_name)
 	players[id] = new_player_name
 	var otherplayer = preload("res://characters/actor/Player/Player.tscn").instance()
 	otherplayer.name = String(id)
@@ -154,7 +153,6 @@ func _connected_ok():
 	rpc("register_player", get_tree().get_network_unique_id(), player_name)
 	
 	#Start the game
-	global_debug.debug_client("Starting game")
 	print_debug("Starting game")
 	start_game()
 	emit_signal("connection_succeeded")

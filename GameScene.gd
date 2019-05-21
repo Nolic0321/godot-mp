@@ -17,6 +17,7 @@ func spawn_entity(entity : Player):
 		player = entity
 
 func _get_spawn_position() -> Vector2:
+	randomize()
 	return $SpawnPosition.position + Vector2(rand_range(-spawn_radius,spawn_radius),rand_range(-spawn_radius,spawn_radius))
 	
 func respawn_player():
@@ -36,6 +37,8 @@ func _delete_player(id):
 
 
 func _on_World_spawn_entity(entity, spawn : Vector2):
-	entity.position = spawn
+	entity.global_position = spawn
 	$Resources.add_child(entity)
+	if entity is MovingNPC:
+		entity.search_new_path()
 	pass # Replace with function body.
